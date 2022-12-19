@@ -5,3 +5,8 @@
 html {
   scroll-behavior: smooth;
 }
+
+#root {
+  font-family: 'Monaco';
+  background-image: url("./assets/fabric_1.webp");
+}

@@ -1,22 +1,23 @@
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import { Home } from "./Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { About } from "./About";
+import { Signup } from "./Signup";
+import { Login } from "./Login";
+
 function App() {
   return (
-    <div>
-      <header>
-        <a href="#">Home</a> | <a href="#posts-index">All posts</a> | <a href="#posts-new">New post</a>
-      </header>
-
-      <div id="posts-new">
-        <h1>New post</h1>
-      </div>
-
-      <div id="posts-index">
-        <h1>All posts</h1>
-      </div>
-
-      <footer>
-        <p>Copyright 20XX</p>
-      </footer>
-    </div>
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
   );
 }
 
