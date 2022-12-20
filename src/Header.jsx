@@ -1,6 +1,19 @@
 import { Link } from "react-router-dom";
+import { Modal } from "./Modal";
+import { Signup } from "./Signup";
+import { useState } from "react";
 
 export function Header() {
+  const [isSignupVisible, setIsSignupVisible] = useState(false);
+
+  const handleSignupShow = () => {
+    setIsSignupVisible(true);
+  };
+
+  const handleSignupClose = () => {
+    setIsSignupVisible(false);
+  };
+
   return (
     <div>
       <header>
@@ -28,11 +41,12 @@ export function Header() {
                 <li class="nav-item">
                   <a href="#posts-index">All posts</a>|
                 </li>
-                <li class="nav-item dropdown">
-                  <a href="#posts-new">New post</a>|<Link to="/about">About</Link>|
+                <li class="nav-item dropdown"></li>
+                <li class="nav-item">
+                  <Link to="/login">Login</Link>|
                 </li>
                 <li class="nav-item">
-                  <Link to="/signup">Signup</Link>|
+                  <Link to="/signup">Signup</Link>|<Link to="/posts/new">New post</Link>|<Link to="/about">About</Link>|
                 </li>
               </ul>
               <form class="d-flex" role="search">

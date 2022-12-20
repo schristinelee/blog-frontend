@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { PostsIndex } from "./PostsIndex";
-import { PostsNew } from "./PostsNew";
+
 import { Signup } from "./Signup";
 import { Login } from "./Login";
+import { PostsNew } from "./PostsNew";
 import { LogoutLink } from "./LogoutLink";
 import { Modal } from "./Modal";
 import { PostsShow } from "./PostsShow";
@@ -27,12 +28,6 @@ export function Home() {
 
   const handleHidePost = () => {
     setIsPostsShowVisible(false);
-  };
-
-  const handleCreatePost = (params) => {
-    axios.post("http://localhost:3000/posts.json", params).then((response) => {
-      setPosts([...posts, response.data]);
-    });
   };
 
   const handleUpdatePost = (id, params) => {
@@ -62,14 +57,11 @@ export function Home() {
 
   return (
     <div className="container">
-      <Signup />
-      <Login />
       <LogoutLink />
       <Modal show={isPostsShowVisible} onClose={handleHidePost}>
         <PostsShow post={currentPost} onUpdatePost={handleUpdatePost} onDestroyPost={handleDestroyPost} />
       </Modal>
 
-      <PostsNew onPostCreate={handleCreatePost} />
       <PostsIndex posts={posts} onSelectPost={handleShowPost} />
     </div>
   );
