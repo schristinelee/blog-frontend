@@ -4,7 +4,7 @@ import { Modal } from "./Modal";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
 import { useState } from "react";
-import { PostsNew } from "./Postsnew";
+import { PostsNew } from "./PostsNew";
 
 export function Header() {
   const [isSignupVisible, setIsSignupVisible] = useState(false);
