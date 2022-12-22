@@ -1,10 +1,15 @@
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { Modal } from "./Modal";
 import { Signup } from "./Signup";
+import { Login } from "./Login";
 import { useState } from "react";
+import { PostsNew } from "./Postsnew";
 
 export function Header() {
   const [isSignupVisible, setIsSignupVisible] = useState(false);
+  const [isLoginVisible, setIsLoginVisible] = useState(false);
+  const [isPostsNewVisible, setIsPostsNewVisible] = useState(false);
 
   const handleSignupShow = () => {
     setIsSignupVisible(true);
@@ -14,11 +19,34 @@ export function Header() {
     setIsSignupVisible(false);
   };
 
+  const handleLoginShow = () => {
+    setIsLoginVisible(true);
+  };
+
+  const handleLoginClose = () => {
+    setIsLoginVisible(false);
+  };
+
+  const handlePostsNewShow = () => {
+    setIsPostsNewVisible(true);
+  };
+
+  const handlePostsNewClose = () => {
+    setIsPostsNewVisible(false);
+  };
+
+  const handleLogout = (event) => {
+    event.preventDefault();
+    delete axios.defaults.headers.common["Authorization"];
+    localStorage.removeItem("jwt");
+    window.location.href = "/";
+  };
+
   return (
     <div>
       <header>
-        <nav class="navbar navbar-expand-lg bg-light">
-          <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg bg-medium">
+          <div class="container-lg">
             <a class="navbar-brand" href="#">
               BLOG.
             </a>
@@ -39,14 +67,42 @@ export function Header() {
                   <Link to="/">Home</Link>|
                 </li>
                 <li class="nav-item">
-                  <a href="#posts-index">All posts</a>|
+                  <Link to="/about">About</Link>|
                 </li>
-                <li class="nav-item dropdown"></li>
-                <li class="nav-item">
-                  <Link to="/login">Login</Link>|
+                {localStorage.jwt === undefined ? (
+                  <>
+                    <li className="nav-item">
+                      <a onClick={handleSignupShow} href="#">
+                        Signup
+                      </a>
+                      |
+                    </li>
+                    <li className="nav-item">
+                      <a onClick={handleLoginShow} href="#">
+                        Login
+                      </a>
+                      |
+                    </li>
+                  </>
+                ) : (
+                  <li classname="nav-item">
+                    <a onClick={handleLogout} href="#">
+                      Logout
+                    </a>
+                    |
+                  </li>
+                )}
+                <li className="nav-item">
+                  <a className="nav-link" href="#posts-index">
+                    All posts
+                  </a>
+                  |
                 </li>
-                <li class="nav-item">
-                  <Link to="/signup">Signup</Link>|<Link to="/posts/new">New post</Link>|<Link to="/about">About</Link>|
+                <li className="nav-item">
+                  <a className="nav-link" href="/posts/new">
+                    New Posts
+                  </a>
+                  |
                 </li>
               </ul>
               <form class="d-flex" role="search">
@@ -58,6 +114,14 @@ export function Header() {
             </div>
           </div>
         </nav>
+
+        <Modal show={isSignupVisible} onClose={handleSignupClose}>
+          <Signup />
+        </Modal>
+
+        <Modal show={isLoginVisible} onClose={handleLoginClose}>
+          <Login />
+        </Modal>
       </header>
     </div>
   );
